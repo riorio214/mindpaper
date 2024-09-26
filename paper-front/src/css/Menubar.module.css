@@ -1,0 +1,35 @@
+.topright {
+    position: absolute;
+    top: 20px; 
+    right: 30px;
+  }
+  .toggleButton {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.4s;
+  }
+  
+  .toggleButton:before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    width: 26px;
+    height: 26px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.4s;
+  }
+  
+  .toggleButtonOn {
+    background-color: #4CAF50;
+  }
+  
+  .toggleButtonOn:before {
+    transform: translateX(26px);
+  }

@@ -1,0 +1,84 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+.main{
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  width: 100%;
+  background-color: whitesmoke;
+  min-height: 100vh;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('../Image/light.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  left:50%;
+  transform: translateX(-50%);
+  width:450px;
+}
+.logo{
+  position: absolute;
+  margin-top: -300px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px;
+  height: 400px;
+  display: flex;
+  background-size: contain;
+  flex-direction: column;
+  cursor: pointer; /* 마우스 오버 시 커서 변경 */
+}
+.inputbox{
+  position: absolute;
+  margin-top: 0px;
+  font-size: 24px;
+}
+.inputbox input{
+border: none; 
+border-bottom: 2px solid ;
+width: 340px;
+height: 30px;
+background-color: transparent;
+font-size: 24px;
+}
+.container h1{
+position: absolute;
+margin-top: -80px;
+}
+
+.btnbox{
+  position: absolute;
+  margin-top:100px; 
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%); 
+  display: flex;
+  justify-content: center;
+}
+.btn{
+  width: calc(100% - 32px);
+  height: 56px;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: rgb(52, 47, 47);
+  border: none;
+  border-radius: 10px;
+  box-shadow: none;
+  cursor: pointer;
+}

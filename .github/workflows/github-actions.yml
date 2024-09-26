@@ -1,0 +1,84 @@
+# github repository actions 페이지에 나타날 이름
+name: CI/CD using github actions & docker
+
+# event trigger
+# main이나 develop 브랜치에 push가 되었을 때 실행
+on:
+  push:
+    branches: [ "main", "front" ,"cicd"]
+
+permissions:
+  contents: read
+
+jobs:
+  CI-CD:
+    runs-on: ubuntu-latest
+    steps:
+      # JDK setting - github actions에서 사용할 JDK 설정 (프로젝트나 AWS의 java 버전과 달라도 무방)
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+            # gradle caching - 빌드 시간 향상
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+               ${{ runner.os }}-gradle-
+
+      - name: Make application.properties for Auth Server
+        if: |
+          contains(github.ref, 'main') ||
+          contains(github.ref, 'cicd')
+        run: |
+          mkdir -p ./auth/src/main/resources # resources 폴더 생성
+          cd ./auth/src/main/resources # resources 폴더로 이동
+          touch application.properties # application.yml 생성
+          echo "${{ secrets.AUTH_YML }}" > application.properties # github actions에서 설정한 값을 application.properties 파일에 쓰기
+          shell: bash
+      - name: Make application-key.yml for Auth Server
+        if: |
+          contains(github.ref, 'main') ||
+          contains(github.ref, 'cicd')
+        run: |
+            mkdir -p ./auth/src/main/resources # resources 폴더 생성
+            cd ./auth/src/main/resources # resources 폴더로 이동
+            touch application-key.yml # application-key.yml 생성
+            echo "${{ secrets.KEY }}" > application-key.yml # github actions에서 설정한 값을 application-key.yml 파일에 쓰기
+            shell: bash
+      - name: Make application-logs.properties for Auth Server
+        if: |
+            contains(github.ref, 'main') ||
+            contains(github.ref, 'cicd')
+        run: |
+            mkdir -p ./auth/src/main/resources # resources 폴더 생성
+            cd ./auth/src/main/resources # resources 폴더로 이동
+            touch application-logs.properties # application-logs.yml 생성
+            echo "${{ secrets.LOGS }}" > application-logs.properties # github actions에서 설정한 값을 application-logs.yml 파일에 쓰기
+            shell: bash
+      - name: Make application.properties for Main Server
+        if: |
+          contains(github.ref, 'main') ||
+          contains(github.ref, 'cicd')
+        run: |
+            mkdir -p ./main/src/main/resources # resources 폴더 생성
+            cd ./main/src/main/resources # resources 폴더로 이동
+            touch application.properties # application.properties 생성
+            echo "${{ secrets.MAIN_YML }}" > application.properties # github actions에서 설정한 값을 application.properties 파일에 쓰기
+            shell: bash
+      - name: Build with Gradle
+        run: ./gradlew build -x test
+          # docker build & push to production
+               - name: Docker build & push to prod
+               if: contains(github.ref, 'main')
+               run: |
+                 docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+                 docker build -f Dockerfile-dev -t ${{ secrets.DOCKER_USERNAME }}/docker-test-prod .
+                 docker push ${{ secrets.DOCKER_USERNAME }}/docker-test-prod
+

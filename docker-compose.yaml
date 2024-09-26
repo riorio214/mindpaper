@@ -1,0 +1,136 @@
+version: '1.0'
+name: paper
+
+secrets:
+  main_db-password:
+    file: mysql/password.txt
+
+volumes:
+  auth-redis_db-data: { }
+  auth-mysql_db-data: { }
+  main-mysql_db-data: { }
+
+networks:
+  front-tier:
+    external: true
+  back-auth-tier:
+    external: true
+  back-main-tier:
+    external: true
+
+services:
+  reverse_proxy:
+    image: nginx:latest
+    ports: # https://docs.docker.com/compose/compose-file/05-services/#long-syntax-3
+      - "80:80"
+    depends_on:
+      auth_server:
+        condition: service_started
+      main_server:
+        condition: service_started
+
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf
+
+  auth_redis_db:
+    hostname: redisHost
+    image: redis:latest
+    expose:
+      - 6379
+    restart: no
+    healthcheck: # https://stackoverflow.com/questions/67904609/how-do-you-perform-a-healthcheck-in-the-redis-docker-image
+      test: [ "CMD-SHELL", "redis-cli ping | grep PONG" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+    volumes:
+      - auth-redis_db-data:/var/lib/redis
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ] # 커스텀 설정 파일 사용
+
+  auth_mysql_db:
+    hostname: mysqlHost
+    image: mysql:8
+    expose:
+      - 3306
+      - 33060
+    restart: no
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "mysqlHost", "--silent" ]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    environment:
+      - MYSQL_DATABASE=user
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/main_db-password
+      - REDIS_HOST=redisHost
+      - REDIS_PORT=6379
+    secrets:
+      - main_db-password
+    volumes:
+      - auth-mysql_db-data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+
+  main_server:
+    hostname: mainHost
+    build: ./main
+    ports:
+      - "8081:8080"
+    restart: no
+    depends_on:
+      main_db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: logs,db,server,jwt,mvc
+
+  main_db:
+    hostname: mysqlHost_main
+    image: mysql:8
+    expose:
+      - 3306
+      - 33060
+    restart: no
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "mysqlHost_main", "--silent" ]
+      interval: 3s
+      retries: 5
+      start_period: 30s
+    environment:
+      - MYSQL_DATABASE=paper
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/main_db-password
+    secrets:
+      - main_db-password
+    volumes:
+      - main-mysql_db-data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+
+  auth_server:
+    hostname: authHost
+    build: ./auth
+    ports:
+      - "8000:8000"
+    restart: no
+    depends_on:
+      auth_redis_db:
+        condition: service_healthy
+      auth_mysql_db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: logs,db,front,jwt
+      TZ: Asia/Seoul
+
+  front_server:
+    hostname: frontHost
+    build: ./paper-front
+    ports:
+      - "3000:3000"
+    restart: no
+
+
+
+
+

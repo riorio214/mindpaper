@@ -1,0 +1,162 @@
+.main{
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    background-color: darkslateblue;
+}
+.mainpage{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    max-width: 414px;
+  }
+  .container {
+    position: relative;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100vh;
+    background: url('../Image/LineD.jpg') no-repeat;
+    background-size: 414px 100%;
+    }
+.headerbox1{
+    position: fixed;
+    padding: 4px 0px 0px;
+    top: 0px;
+    width: 100%;
+    max-width: 414px;
+    height: 60px;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 5px;
+    z-index: 50;
+    transition: transform 0.5s ease 0s;
+}
+
+.headerbox2{
+    position: relative;
+    height: 100%;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    z-index: 50;
+}
+.img{
+    position: absolute;
+    left: 24px;
+    width: 18px;
+    cursor: pointer;
+}
+.headerbox3{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    background-color: rgb(255, 255, 255);
+}
+.h1F{
+    font-family: NanumBarunpen, sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+    color: rgb(0, 0, 0);
+}
+.paperlistbox1{
+    padding: 10px 12px;
+    position: absolute;
+    top: 68px;
+    right: 24px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    text-align: center;
+    font-family: "Noto Sans KR";
+    font-weight: bold;
+    font-size: 14px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(137, 137, 137);
+    border-radius: 16px;
+    z-index: 50;
+    transition: opacity 0s ease 0s, all 0.5s ease 0s;
+}
+.write{
+    position: fixed;
+    right: calc(50% + 24px - min(100vw, 414px) / 2);
+    bottom: 16px;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    transition: opacity 0s ease 0s, all 0.5s ease 0s;
+    z-index: 30;
+}
+.writebtn{
+    margin: 0px 0px 10px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 56px;
+    flex-shrink: 0;
+    height: 56px;
+    border: 1px solid rgb(35, 35, 35);
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+.post1{
+    position: relative;
+    top: 0px;
+    bottom: 0px;
+    width: 100%;
+    margin: 0px;
+    padding: 101px 0px 72px;
+    min-height: 100%;
+}
+.post2{
+    position: absolute;
+    width: 100%;
+    max-width: 414px;
+    height: auto;
+    min-height: 100vh;
+    display: grid;
+    align-content: start;
+    grid-template-columns: calc(33.3333%) calc(33.3333%) calc(33.3333%);
+}
+.postbox{
+    width: 100%;
+    height: 10px;
+    z-index: 100;
+}
+.postit{
+    margin: 0px auto;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 130px;
+    height: 142px;
+    overflow: hidden;
+    padding: 10px;
+    border-radius: 13px;
+    transform: rotate(5deg) translateX(7px) translateY(7px);
+    background-size: cover;
+    background-color: rgb(242, 229, 229);
+    cursor: pointer;
+    z-index: 2;
+}
+.postitcontext{
+    width: 100%;
+    will-change: transform;
+    text-align: center;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    color: rgb(123, 31, 162);
+    font-family: "Hi Melody";
+    font-size: 11px;
+    line-height: 2;   
+}

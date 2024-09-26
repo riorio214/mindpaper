@@ -1,0 +1,116 @@
+.main{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    background-color: darkslateblue;
+    min-height: 100vh;
+    }
+    .container {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 414px;
+        min-height: 100vh;
+        height: 100%;
+        display: flex;
+        background: url('../Image/LineD.jpg') no-repeat;
+        background-size: 100% 90%;
+        flex-direction: column;
+      }
+      .container h1{
+        position: absolute;
+        top:30px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 20px;
+        color: white;
+      }
+      .box1{
+        margin: 19px 0px 23px;
+        align-items: center;
+        display:flex;
+        margin-top:70px;
+        width:100%;
+        height: 50px;
+        justify-content: center;
+      }
+      .boxs1{
+        min-width: 144px;
+        max-height: 100px;
+        display: flex;
+        flex-direction: column;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        align-items: center;
+      }
+      .boxs1 p{
+        color: white;
+      }
+      .boxs1 h2{
+        color: white;
+      }
+      .box2{
+        height: 72px;
+        padding: 16px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .boxs2{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 70px;
+        cursor: pointer;
+      }
+      .box3{
+        width:374px;
+        height:calc(100%-315px);
+        background-color: white;
+        margin: 0 auto;
+      }
+      .box4{
+        width:374px;
+        height:49px;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 9px;
+        display: flex;
+        margin: 0 auto;
+      }
+      .boxs3{
+        background-color: white;
+        flex: 1 1 0%;
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        padding-top: 14px;
+        font-weight: bold;
+        color: rgb(35, 35, 35);
+        font-size: 16px;
+        line-height: 16px;
+        border-bottom: 4px solid rgb(35, 35, 35);
+        cursor: pointer;
+      }
+      .boxs4{
+        flex: 1 1 0%;
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        padding-top: 14px;
+        font-weight: bold;
+        color: rgb(102, 102, 102);
+        font-size: 16px;
+        line-height: 16px;
+        border-bottom: none;
+        cursor: pointer;
+        background-color: white;
+          
+      }
+      .box5{
+        width:374px;
+        height:calc(100%-315px);
+        background-color: white;
+        margin: 0 auto;
+      }

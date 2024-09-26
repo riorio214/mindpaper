@@ -1,0 +1,18 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 414px;
+  height: 491px;
+  display: flex;
+  background: url('../Image/light.jpg') no-repeat;
+  background-size: 100% 90%;
+  flex-direction: column;
+}
